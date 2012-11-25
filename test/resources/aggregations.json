@@ -1,0 +1,23 @@
+[
+    {
+        "dest": "dir1.js",
+        "base": "./test/resources/dir1",
+        "resources": [
+            "**/*.js"
+        ]
+    },
+    {
+        "dest":"dir2.js",
+        "base":"./test/resources/dir2",
+        "resources":[
+            "**/*.js"
+        ]
+    },
+    {
+        "dest":"all.js",
+        "base":"./test/resources",
+        "resources":[
+            "**/*.js"
+        ]
+    }
+]

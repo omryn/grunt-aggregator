@@ -1,0 +1,17 @@
+{
+    "name":"WixGruntPlugins",
+    "description":"Plugins for Wix js build",
+    "version":"0.0.1",
+
+    "main":"grant.js",
+    "engines":{
+        "node":">= 0.8.0"
+    },
+    "dependencies": {
+        "grunt-jasmine-node": ">=0.0.4",
+        "grunt-clean":">=0.3.0"
+    },
+    "scripts":{
+        "test":"grunt test"
+    }
+}
