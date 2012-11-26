@@ -14,7 +14,6 @@
     "dependencies":{
         "grunt-jasmine-node":">=0.0.4",
         "grunt-clean":">=0.3.0",
-        "grunt":"*"
     },
     "scripts":{
         "test":"grunt test"
