@@ -1,9 +1,9 @@
 {
     "name":"grunt-aggregator",
     "description":"Plugins for Wix.com js build",
-    "version":"0.1.2",
+    "version":"0.1.4",
     "author":"Omry Nachman <omry@wix.com>",
-    "main":"grant.js",
+    "main":"commons/grunt-aggregator.js",
     "engines":{
         "node":">= 0.8.0"
     },
