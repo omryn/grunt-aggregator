@@ -10,12 +10,18 @@ describe("FilesList", function () {
                 "id":"test/resources",
                 "resources":[
                     {
-                        "id":"dir1/subdir1_1/mod_json",
-                        "url":"dir1/subdir1_1/mod.json"
+                        "url":"dir1/subdir1_1/mod.json",
+                        "id":"dir1.subdir1_1.mod.json"
                     },
                     {
-                        "id":"dir1/subdir1_2/mod_json",
-                        "url":"dir1/subdir1_2/mod.json"
+                        "url":"dir1/subdir1_2/mod.json",
+                        "id":"dir1.subdir1_2.mod.json"
+                    },
+                    {
+                        "url":"dir2/a.js"
+                    },
+                    {
+                        "url":"dir2/b.js"
                     }
                 ]
             }

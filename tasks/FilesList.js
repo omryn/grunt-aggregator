@@ -11,11 +11,17 @@ module.exports = function (grunt) {
         options.base = options.base || '.';
         options.relativeTo = options.relativeTo || options.base;
         options.exclude = options.exclude || [];
-        var defaultPrinter = 'function (fileName) { return { id:fileName.replace(new RegExp("\\.","g"), "_"), url:fileName }; }';
+        var resourcesTempplate = 'files.map( ' +
+                'function (fileName) { ' +
+                'var ret = { url:fileName }; ' +
+                'if (fileName.lastIndexOf(".json") === fileName.length-5) {' +
+                'ret.id = fileName.replace(new RegExp("/","g"),".");}' +
+                ' return ret' +
+                '})';
 
         options.template = options.template || '<%= JSON.stringify([{url:"' + options.relativeTo +
                 '", id:"' + options.base +
-                '", resources: files.map(' + defaultPrinter + ')}]) %>';
+                '", resources: ' + resourcesTempplate + '}]) %>';
 
         var allFiles = [];
 

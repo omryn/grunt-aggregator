@@ -44,7 +44,7 @@ module.exports = function (grunt) {
 
         list: {
             base: 'test/resources',
-            include: ["**/*.json"],
+            include: ["**/*.json", "dir2/**/*"],
             exclude: ["aggregations.json"],
             dest: 'target/manifest.json'
         },
