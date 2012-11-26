@@ -1,34 +1,16 @@
-/**
- * created by Omri
- * Date: 11/25/12
- * Time: 2:48 PM
- */
-/*
- * grunt-contrib-uglify
- * http://gruntjs.com/
- *
- * Copyright (c) 2012 "Cowboy" Ben Alman, contributors
- * Licensed under the MIT license.
- */
-
 'use strict';
-
 module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
         lint:{
             all:[
                 'grunt.js',
-                'src/**.js',
-                'test/**.js'
+                'tasks/**/*.js',
+                'test/javascript/**/*.js'
             ]
         },
 
-        jshint: {
-            options: {
-                node: true
-            }
-        },
+        jshint: '<json:jshint.json>',
 
         jasmine_node: {
            specNameMatcher: "spec",
@@ -48,6 +30,25 @@ module.exports = function (grunt) {
             dest: "target"
         },
 
+        modify: {
+            base: 'test/resources',
+            files: ['dir*/**/*.json'],
+            dest: 'target/mod',
+            modifier: function(name, content) {
+                return {
+                    name: name.indexOf('subdir1_2') >= 0 ? 'genereated.name.json' : name,
+                    content: '[' + content + ']'
+                }
+            }
+        },
+
+        list: {
+            include: ["test/**/*.json"],
+            exclude: ["**/aggregations.json"],
+            dest: 'target/manifest.json',
+            relativeTo: 'test/resources'
+        },
+
         clean: {
             test: "target"
         }
@@ -57,8 +58,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-clean');
 
     // Actually load this plugin's task(s).
-    grunt.loadTasks('src/javascript/tasks');
+    grunt.loadTasks('tasks');
 
     // By default, lint and run all tests.
-    grunt.registerTask('default', ['clean', 'lint', 'aggregate', 'jasmine_node', 'min']);
+    grunt.registerTask('default', ['clean', 'lint', 'list', 'modify', 'aggregate',  'min', 'jasmine_node', 'lint']);
 };
