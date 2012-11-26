@@ -10,47 +10,49 @@ module.exports = function (grunt) {
             ]
         },
 
-        jshint: '<json:jshint.json>',
+        jshint:'<json:jshint.json>',
 
-        jasmine_node: {
-           specNameMatcher: "spec",
-           projectRoot: ".",
-           requirejs: false,
-           forceExit: true,
-           jUnit: {
-             report: false,
-             savePath : "./build/reports/jasmine/",
-             useDotNotation: true,
-             consolidate: true
-           }
-         },
-
-        aggregation: {
-            src: "test/resources/aggregations.json",
-            dest: "target"
+        jasmine_node:{
+            specNameMatcher:"spec",
+            projectRoot:".",
+            requirejs:false,
+            forceExit:true,
+            jUnit:{
+                report:false,
+                savePath:"./build/reports/jasmine/",
+                useDotNotation:true,
+                consolidate:true
+            }
         },
 
-        modify: {
-            base: 'test/resources',
-            files: ['dir*/**/*.json'],
-            dest: 'target/mod',
-            modifier: function(name, content) {
+        aggregation:{
+            src:"test/resources/aggregations.json",
+            dest:"target"
+        },
+
+        modify:{
+            base:'test/resources',
+            files:['dir*/**/*.json'],
+            dest:'target/mod',
+            modifier:function (name, content) {
                 return {
-                    name: name.indexOf('subdir1_2') >= 0 ? 'genereated.name.json' : name,
-                    content: '[' + content + ']'
+                    name:name.indexOf('subdir1_2') >= 0 ? 'genereated.name.json' : name,
+                    content:'[' + content + ']'
                 }
             }
         },
 
-        list: {
-            base: 'test/resources',
-            include: ["**/*.json", "dir2/**/*"],
-            exclude: ["aggregations.json"],
-            dest: 'target/manifest.json'
+        list:{
+            test:{
+                base:'test/resources',
+                include:["**/*.json", "dir2/**/*"],
+                exclude:["aggregations.json"],
+                dest:'target/manifest.json'
+            }
         },
 
-        clean: {
-            test: "target"
+        clean:{
+            test:"target"
         }
     });
 
@@ -61,5 +63,5 @@ module.exports = function (grunt) {
     grunt.loadTasks('tasks');
 
     // By default, lint and run all tests.
-    grunt.registerTask('default', ['clean', 'lint', 'list', 'modify', 'aggregate',  'min', 'jasmine_node', 'lint']);
+    grunt.registerTask('default', ['clean', 'lint', 'list:test', 'modify', 'aggregate', 'min', 'jasmine_node', 'lint']);
 };

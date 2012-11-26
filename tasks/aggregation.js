@@ -5,9 +5,16 @@ module.exports = function (grunt) {
     var utils = require('../common/utils.js')(grunt);
 
     grunt.registerTask('aggregate', 'Concat, minifies and create index.json, index.debug.json', function () {
-        grunt.config.requires(['aggregation', 'src', 'dest']);
-
         var options = grunt.config('aggregation');
+
+        if (this.args && this.args[0]) {
+            grunt.config.requires(['aggregation', this.args[0], 'src']);
+            grunt.config.requires(['aggregation', this.args[0], 'dest']);
+            options = options[this.args[0]];
+        } else {
+            grunt.config.requires(['aggregation', 'src']);
+            grunt.config.requires(['aggregation', 'dest']);
+        }
 
         var aggregations = grunt.file.readJSON(options.src);
         var min = grunt.config.get('min') || {};

@@ -4,10 +4,16 @@ module.exports = function (grunt) {
     var utils = require('../common/utils.js')(grunt);
 
     grunt.registerTask('list', 'makes a files list by template', function () {
-        grunt.config.requires(['list', 'include']);
-        grunt.config.requires(['list', 'dest']);
+        var options = grunt.config.get('list');
+        if (this.args && this.args[0]) {
+            grunt.config.requires(['list', this.args[0], 'include']);
+            grunt.config.requires(['list', this.args[0], 'dest']);
+            options = options[this.args[0]];
+        } else {
+            grunt.config.requires(['list', 'include']);
+            grunt.config.requires(['list', 'dest']);
+        }
 
-        var options = grunt.config('list');
         options.base = options.base || '.';
         options.relativeTo = options.relativeTo || options.base;
         options.exclude = options.exclude || [];
