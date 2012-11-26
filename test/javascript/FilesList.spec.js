@@ -6,12 +6,18 @@ describe("FilesList", function () {
         var actual = JSON.parse(readFileSync('target/manifest.json'));
         expect(actual).toEqual([
             {
-                "id":"dir1/subdir1_1/mod_json",
-                "url":"dir1/subdir1_1/mod.json"
-            },
-            {
-                "id":"dir1/subdir1_2/mod_json",
-                "url":"dir1/subdir1_2/mod.json"
+                "url":"test/resources",
+                "id":"test/resources",
+                "resources":[
+                    {
+                        "id":"dir1/subdir1_1/mod_json",
+                        "url":"dir1/subdir1_1/mod.json"
+                    },
+                    {
+                        "id":"dir1/subdir1_2/mod_json",
+                        "url":"dir1/subdir1_2/mod.json"
+                    }
+                ]
             }
         ]);
         done();

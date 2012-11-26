@@ -5,35 +5,37 @@ module.exports = function (grunt) {
 
     grunt.registerTask('list', 'makes a files list by template', function () {
         grunt.config.requires(['list', 'include']);
-        grunt.config.requires(['list', 'relativeTo']);
         grunt.config.requires(['list', 'dest']);
 
         var options = grunt.config('list');
+        options.base = options.base || '.';
+        options.relativeTo = options.relativeTo || options.base;
         options.exclude = options.exclude || [];
-        options.template = options.template || '<%  print(JSON.stringify(files.map(function (fileName) {' +
-                'return {' +
-                'id:fileName.replace(".","_"),' +
-                'url:fileName' +
-                '};' +
-                '}))); %>';
+        var defaultPrinter = 'function (fileName) { return { id:fileName.replace(new RegExp("\\.","g"), "_"), url:fileName }; }';
 
+        options.template = options.template || '<%= JSON.stringify([{url:"' + options.relativeTo +
+                '", id:"' + options.base +
+                '", resources: files.map(' + defaultPrinter + ')}]) %>';
 
         var allFiles = [];
 
         options.include.forEach(function (file) {
-            var files = grunt.file.expandFiles(file);
+            var files = grunt.file.expandFiles(utils.unixpath(options.base + "/" + file));
             files.forEach(function (fileName) {
-                allFiles.push(utils.unixpath(path.relative(options.relativeTo, fileName)));
+                allFiles.push(path.relative(options.relativeTo, fileName));
             });
         });
 
+        allFiles = utils.cleanArray(allFiles);
+
         options.exclude.forEach(function (file) {
-            var files = grunt.file.expandFiles(file);
+            var files = grunt.file.expandFiles(utils.unixpath(options.base + "/" + file));
             files.forEach(function (fileName) {
                 allFiles = grunt.utils._.without(allFiles, utils.unixpath(path.relative(options.relativeTo, fileName)));
             });
         });
 
-        grunt.file.write(options.dest, grunt.template.process(options.template, {files:utils.cleanArray(allFiles)}));
+        allFiles = utils.cleanArray(allFiles);
+        grunt.file.write(options.dest, grunt.template.process(options.template, {files:allFiles}));
     });
 };
