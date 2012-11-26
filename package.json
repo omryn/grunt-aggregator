@@ -2,17 +2,31 @@
     "name":"grunt-aggregator",
     "description":"Plugins for Wix.com js build",
     "version":"0.1.0",
-    "author": "Omry Nachman <omry@wix.com>",
+    "author":"Omry Nachman <omry@wix.com>",
     "main":"grant.js",
     "engines":{
         "node":">= 0.8.0"
     },
-    "dependencies": {
-        "grunt-jasmine-node": ">=0.0.4",
+    "repository":{
+        "type":"git",
+        "url":"git@github.com:omryn/grunt-aggregator.git"
+    },
+    "dependencies":{
+        "grunt-jasmine-node":">=0.0.4",
         "grunt-clean":">=0.3.0",
         "grunt":"*"
     },
     "scripts":{
         "test":"grunt test"
-    }
+    },
+    "keywords":[
+        "gruntplugin"
+    ],
+    "licenses":[
+        {
+            "type":"MIT",
+            "url":"https://github.com/:omryn/grunt-aggregator/blob/master/LICENSE-MIT"
+        }
+    ]
+
 }
