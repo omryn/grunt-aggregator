@@ -28,7 +28,7 @@ module.exports = function (grunt) {
                 '})';
 
         options.template = options.template || '<%= JSON.stringify([{url:"' + options.relativeTo +
-                '", id:"' + (options.base) +
+                '", id:"' + options.id +
                 '", resources: ' + resourcesTempplate + '}], null, 4) %>';
 
         var allFiles = [];
