@@ -17,7 +17,8 @@
         "browser":true,
         "regexdash":true,
         "loopfunc":true,
-        "mootools":true
+        "mootools":true,
+        "node":true
     },
     "globals":{
         "Mousetrap":true,

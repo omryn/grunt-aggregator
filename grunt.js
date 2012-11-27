@@ -10,7 +10,7 @@ module.exports = function (grunt) {
             ]
         },
 
-        jshint:'<json:jshint.json>',
+        jshint:'<json:common/jshint.json>',
 
         jasmine_node:{
             specNameMatcher:"spec",
@@ -25,7 +25,7 @@ module.exports = function (grunt) {
             }
         },
 
-        aggregation:{
+        aggregate:{
             src:"test/resources/aggregations.json",
             dest:"target"
         },
@@ -63,5 +63,5 @@ module.exports = function (grunt) {
     grunt.loadTasks('tasks');
 
     // By default, lint and run all tests.
-    grunt.registerTask('default', ['clean', 'lint', 'list:test', 'modify', 'aggregate', 'min', 'jasmine_node', 'lint']);
+    grunt.registerTask('default', ['clean', 'lint', 'list:test', 'modify', 'aggregate', 'lint', 'min', 'jasmine_node']);
 };
