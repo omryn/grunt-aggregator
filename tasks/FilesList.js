@@ -9,9 +9,11 @@ module.exports = function (grunt) {
             grunt.config.requires(['list', this.args[0], 'include']);
             grunt.config.requires(['list', this.args[0], 'dest']);
             options = options[this.args[0]];
+            options.id = this.args[0];
         } else {
             grunt.config.requires(['list', 'include']);
             grunt.config.requires(['list', 'dest']);
+            options.id = options.base || options.relativeTo || "generated.manifest" + parseInt((Math.random() * 0xffffffff),36);
         }
 
         options.base = options.base || '.';
@@ -26,8 +28,8 @@ module.exports = function (grunt) {
                 '})';
 
         options.template = options.template || '<%= JSON.stringify([{url:"' + options.relativeTo +
-                '", id:"' + options.base +
-                '", resources: ' + resourcesTempplate + '}]) %>';
+                '", id:"' + (options.base) +
+                '", resources: ' + resourcesTempplate + '}], null, 4) %>';
 
         var allFiles = [];
 

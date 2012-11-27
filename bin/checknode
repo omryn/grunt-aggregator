@@ -1,0 +1,15 @@
+if [ -s "${NODE_HOME}/node" ]; then
+echo "NodeJs found. Good for you! Go tell Yoav you've managed to install it"
+else
+echo "***********************************************************************************************"
+echo "*                                                                                             *"
+echo "*                              --- FATAL!!! ---                                               *"
+echo "*                                                                                             *"
+echo "*          NODE_HOME is not defined or does not point to NodeJs base directory                *"
+echo "*          NodeJs must be installed in the build environment (http://nodejs.org/download/)    *"
+echo "*          And NODE_JOME should be set to NodeJs's base folder                                *"
+echo "*          See Yoav Avrahami +972-54-2344146 for more details                                 *"
+echo "*                                                                                             *"
+echo "***********************************************************************************************"
+exit 1
+fi

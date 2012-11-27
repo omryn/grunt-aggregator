@@ -7,7 +7,7 @@ describe("FilesList", function () {
         expect(actual).toEqual([
             {
                 "url":"test/resources",
-                "id":"test/resources",
+                "id":"test",
                 "resources":[
                     {
                         "url":"dir1/subdir1_1/mod.json",
