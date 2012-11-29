@@ -1,0 +1,17 @@
+[
+    {
+        "id":"all",
+        "atPhase":"PHASE.ALL",
+        "tags":["all", "dir1", "dir2"],
+        "targetDir":"no-min",
+        "sourceDir":"./test/resources",
+        "package":"",
+        "include":[
+            "**/*.js"
+        ],
+        "exclude":[
+            "**/exclude.js",
+            "css/*"
+        ]
+    }
+]

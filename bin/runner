@@ -1,0 +1,6 @@
+﻿#!/bin/sh
+$(echo $*) > $TEMP/running.txt
+EXITCODE=$?
+cat $TEMP/running.txt
+rm $TEMP/running.txt
+exit $EXITCODE

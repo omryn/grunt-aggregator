@@ -1,0 +1,23 @@
+[
+    {
+        "tags": [
+            "css"
+        ],
+        "id": "css",
+        "url": "css/css",
+        "resources": [
+            {
+                "url": "1.css"
+            },
+            {
+                "url": "2.css"
+            },
+            {
+                "url": "a.js"
+            },
+            {
+                "url": "b.js"
+            }
+        ]
+    }
+]

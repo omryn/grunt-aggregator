@@ -1,0 +1,26 @@
+[
+    {
+        "id":"dir1",
+        "url":"aggregations/dir1.min.js",
+        "tags":["dir1"],
+        "atPhase":"PHASE.DIR1"
+    },
+    {
+        "id":"dir2",
+        "url":"aggregations/dir2.min.js",
+        "tags":["dir2"],
+        "atPhase":"PHASE.DIR2"
+    },
+    {
+        "id":"all",
+        "url":"aggregations/all.min.js",
+        "tags":["all", "dir1", "dir2"],
+        "atPhase":"PHASE.ALL"
+    },
+    {
+        "id":"otherall#subname",
+        "url":"aggregations/otherall.min.js",
+        "tags":["id", "manipulation"],
+        "atPhase":"PHASE.ALL"
+    }
+]

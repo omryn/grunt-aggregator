@@ -1,0 +1,14 @@
+[
+    {
+        "id":"css",
+        "tags":["css"],
+        "targetDir":"css",
+        "package":"css",
+        "sourceDir":"./test/resources",
+        "include":[
+            "*"
+        ],
+        "exclude":[
+        ]
+    }
+]

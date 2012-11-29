@@ -1,0 +1,17 @@
+[
+    {
+        "id":"manymin",
+        "tags":["manymin"],
+        "targetDir":"",
+        "sourceDir":"./test/resources",
+        "package":"",
+        "manymin":true,
+        "min":false,
+        "copy":false,
+        "include":[
+            "manymin/*.js"
+        ],
+        "exclude":[
+        ]
+    }
+]

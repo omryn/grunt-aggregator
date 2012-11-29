@@ -1,0 +1,17 @@
+[
+    {
+        "tags": [
+            "manymin"
+        ],
+        "id": "manymin",
+        "url": ".",
+        "resources": [
+            {
+                "url": "manymin/a.js"
+            },
+            {
+                "url": "manymin/b.js"
+            }
+        ]
+    }
+]

@@ -1,0 +1,16 @@
+[
+    {
+        "id":       "list",
+        "tags":     ["all", "dir1", "dir2"],
+        "targetDir":"",
+        "sourceDir":"./test/resources",
+        "package":  "",
+        "include":  [
+            "dir*/**/*.json",
+            "dir2/**/*.js"
+        ],
+        "exclude":  [
+            "**/exclude.js"
+        ]
+    }
+]

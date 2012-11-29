@@ -1,6 +1,6 @@
 var grunt = require('grunt');
-grunt.loadNpmTasks('grunt-jasmine-node');
 grunt.loadNpmTasks('grunt-clean');
+grunt.loadNpmTasks('grunt-contrib-copy');
 
 // Actually load this plugin's task(s).
 grunt.loadTasks('tasks');

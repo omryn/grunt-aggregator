@@ -1,7 +1,7 @@
 {
     "name":"grunt-aggregator",
     "description":"Plugins for Wix.com js build",
-    "version":"0.2.0",
+    "version":"0.2.18",
     "author":"Omry Nachman <omry@wix.com>",
     "main":"commons/grunt-aggregator.js",
     "engines":{
@@ -14,7 +14,8 @@
     "dependencies":{
         "grunt-jasmine-node":">=0.0.4",
         "grunt-clean":">=0.3.0",
-        "grunt-contrib-copy":"*"
+        "grunt-contrib-copy":">=0.3.2",
+        "grunt-contrib-mincss":"*"
     },
     "scripts":{
         "test":"grunt test"

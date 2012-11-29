@@ -1,0 +1,29 @@
+[
+    {
+        "tags": [
+            "all",
+            "dir1",
+            "dir2"
+        ],
+        "id": "all",
+        "atPhase": "PHASE.ALL",
+        "url": "no-copy",
+        "resources": [
+            {
+                "url": "dir1/subdir1_1/a.js"
+            },
+            {
+                "url": "dir1/subdir1_1/b.js"
+            },
+            {
+                "url": "dir1/subdir1_2/a.js"
+            },
+            {
+                "url": "dir2/a.js"
+            },
+            {
+                "url": "dir2/b.js"
+            }
+        ]
+    }
+]

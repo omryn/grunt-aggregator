@@ -1,0 +1,90 @@
+[
+    {
+        "tags": [
+            "dir1"
+        ],
+        "id": "dir1",
+        "atPhase": "PHASE.DIR1",
+        "url": "aggregations/dir1",
+        "resources": [
+            {
+                "url": "subdir1_1/a.js"
+            },
+            {
+                "url": "subdir1_1/b.js"
+            },
+            {
+                "url": "subdir1_2/a.js"
+            }
+        ]
+    },
+    {
+        "tags": [
+            "dir2"
+        ],
+        "id": "dir2",
+        "atPhase": "PHASE.DIR2",
+        "url": "aggregations/dir2",
+        "resources": [
+            {
+                "url": "a.js"
+            },
+            {
+                "url": "b.js"
+            }
+        ]
+    },
+    {
+        "tags": [
+            "all",
+            "dir1",
+            "dir2"
+        ],
+        "id": "all",
+        "atPhase": "PHASE.ALL",
+        "url": "aggregations",
+        "resources": [
+            {
+                "url": "dir1/subdir1_1/a.js"
+            },
+            {
+                "url": "dir1/subdir1_1/b.js"
+            },
+            {
+                "url": "dir1/subdir1_2/a.js"
+            },
+            {
+                "url": "dir2/a.js"
+            },
+            {
+                "url": "dir2/b.js"
+            }
+        ]
+    },
+    {
+        "tags": [
+            "id",
+            "manipulation"
+        ],
+        "id": "otherall#subname",
+        "atPhase": "PHASE.ALL",
+        "url": "aggregations",
+        "resources": [
+            {
+                "url": "dir1/subdir1_1/a.js"
+            },
+            {
+                "url": "dir1/subdir1_1/b.js"
+            },
+            {
+                "url": "dir1/subdir1_2/a.js"
+            },
+            {
+                "url": "dir2/a.js"
+            },
+            {
+                "url": "dir2/b.js"
+            }
+        ]
+    }
+]
