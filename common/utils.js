@@ -1,12 +1,25 @@
-var regEx = /\\/g;
-var path = require('path');
 module.exports = function (grunt) {
-    var ret = {
-        unixpath:function (path) {
-            return path.replace(regEx, "/");
+    var backSlash = /\\/g;
+    var lastSlash = /\/$/;
+    var path = require('path');
+
+    var ret;
+    ret = {
+        unixpath:function (_path, base) {
+            base = base || './';
+            return path.normalize(base + "/" + _path).replace(backSlash, "/").replace(lastSlash, "");
         },
-        cleanArray:function (array) {
-            return grunt.utils._.chain(array).compact().map(path.normalize).map(ret.unixpath).uniq().value();
+
+        cleanArray:function (array, base) {
+            base = base || '';
+            return grunt.utils._
+                    .chain(array)
+                    .compact()
+                    .map(function (file) {
+                        return ret.unixpath(file, base);
+                    })
+                    .uniq()
+                    .value();
         }
     };
 

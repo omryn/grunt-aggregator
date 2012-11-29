@@ -1,23 +1,29 @@
 [
     {
-        "dest": "dir1.js",
-        "base": "./test/resources/dir1",
-        "resources": [
+        "dest":"target/dir1",
+        "base":"./test/resources/dir1",
+        "include":[
             "**/*.js"
+        ],
+        "exclude":[
+            "**/*exclude*"
         ]
     },
     {
-        "dest":"dir2.js",
+        "dest":"target/dir2",
         "base":"./test/resources/dir2",
-        "resources":[
+        "include":[
             "**/*.js"
         ]
     },
     {
-        "dest":"all.js",
+        "dest":"target/all",
         "base":"./test/resources",
-        "resources":[
+        "include":[
             "**/*.js"
+        ],
+        "exclude":[
+            "**/exclude.js"
         ]
     }
 ]

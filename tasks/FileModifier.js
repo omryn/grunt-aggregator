@@ -3,22 +3,8 @@ module.exports = function (grunt) {
     var utils = require('../common/utils.js')(grunt);
 
     grunt.registerMultiTask('modify', 'Modify a file content and name', function () {
-        var options = grunt.config('modify');
-        if (this.args && this.args[0]) {
-            grunt.config.requires(['modify', this.args[0], 'base']);
-            grunt.config.requires(['modify', this.args[0], 'files']);
-            grunt.config.requires(['modify', this.args[0], 'dest']);
-            options = options[this.args[0]];
-        } else {
-            grunt.config.requires(['modify', 'base']);
-            grunt.config.requires(['modify', 'files']);
-            grunt.config.requires(['modify', 'dest']);
-        }
-
-
-        grunt.config.requires(['modify', 'modifier']);
+        var options = this.data;
         var path = require('path');
-
         var fs = require('fs');
         var done = this.async();
         options.base = path.normalize(options.base);

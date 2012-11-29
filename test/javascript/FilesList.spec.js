@@ -3,7 +3,7 @@ var readFileSync = require('fs').readFileSync;
 
 describe("FilesList", function () {
     it("should create a list of all the json files in resources", function (done) {
-        var actual = JSON.parse(readFileSync('target/manifest.json'));
+        var actual = JSON.parse(readFileSync('target/files.list.json'));
         expect(actual).toEqual([
             {
                 "url":"test/resources",
