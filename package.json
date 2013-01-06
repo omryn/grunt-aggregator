@@ -1,7 +1,11 @@
 {
     "name":"grunt-aggregator",
     "description":"Plugins for Wix.com js build",
+<<<<<<< HEAD
     "version":"0.2.18",
+=======
+    "version":"0.2.1",
+>>>>>>> df0a109baff63e396ae728555fa73f5702548bbc
     "author":"Omry Nachman <omry@wix.com>",
     "main":"commons/grunt-aggregator.js",
     "engines":{
