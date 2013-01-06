@@ -1,4 +1,7 @@
 #!/bin/sh
+if [ -z "$TEMP" ]; then
+	export TEMP=/tmp
+fi
 $(echo $*) > $TEMP/running.txt
 EXITCODE=$?
 cat $TEMP/running.txt
