@@ -18,6 +18,7 @@ module.exports = function (grunt) {
                     .map(function (file) {
                         return ret.unixpath(file, base);
                     })
+                    .sort()
                     .uniq()
                     .value();
         }
