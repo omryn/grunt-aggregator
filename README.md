@@ -2,12 +2,15 @@
 Aggregates file groups (aka aggregations): Minifies files with include/exclude wildcards,
 creates an index and debug index of the minified files, and runs lint and copy tasks.
 GruntAggregator also include a modify task, which allows manipulation of file name and content
+
 ## Tasks
+
 ### aggregate task
 Aggregate is a multitask, which creates multiple minified files, copies the original files (for debugging)
   and creates an {index}.json file with aggregation mapping.
   In addition, a {index}.debug.json if created, mapping the full, unminified version of the content.
 This is useful if you're running your application in debug mode.
+
 #### Usage:
 ```javascript
 // Project configuration.
@@ -24,7 +27,9 @@ grunt.initConfig({
             },
 });
 ```
+
 deployment/main.json
+
 ```javascript
 // Project configuration.
 [
@@ -46,3 +51,9 @@ deployment/main.json
 ]
 ```
 
+## Development
+
+### Testing
+To run test suite:
+1. Install grunt globally `npm install -g grunt`
+2. Simply run grunt `grunt` to see all tests passing
