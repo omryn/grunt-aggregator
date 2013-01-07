@@ -7,7 +7,10 @@ module.exports = function (grunt) {
     ret = {
         unixpath:function (_path, base) {
             base = base || './';
-            return path.normalize(base + "/" + _path).replace(backSlash, "/").replace(lastSlash, "");
+            base = base.replace(backSlash,"/");
+            _path = _path.replace(backSlash,"/");
+
+            return path.join(base, _path).replace(lastSlash, "");
         },
 
         cleanArray:function (array, base) {
