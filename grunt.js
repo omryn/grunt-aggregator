@@ -72,7 +72,7 @@ module.exports = function (grunt) {
                 dest:'target/mod',
                 modifier:function (name, content) {
                     return {
-                        name:name.indexOf('subdir1_2') >= 0 ? 'genereated.name.json' : name,
+                        name:name.search('subdir1_2') !== -1 ? 'genereated.name.json' : name,
                         content:'[' + content + ']'
                     };
                 }

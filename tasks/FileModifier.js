@@ -31,9 +31,10 @@ module.exports = function (grunt) {
                 } else {
                     var fileNameRelativeToBase = path.relative(options.base, file);
                     mod = options.modifier(fileNameRelativeToBase, content);
+
                     if (mod) {
                         mod.name = mod.name ? path.resolve(options.dest, mod.name) : path.resolve(options.dest, file);
-                        mod.name = utils.unixpath(mod.name);
+
                         grunt.file.mkdir(path.dirname(mod.name));
                         fs.writeFile(mod.name, mod.content, writeFile);
                     }
