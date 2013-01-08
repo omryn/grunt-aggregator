@@ -2,8 +2,18 @@ command_exists () {
     type "$1" &> /dev/null ;
 }
 if command_exists node ; then
+    echo "***************************************"
     echo "Node.js was found. Happy Happy Joy Joy."
+    echo "***************************************"
 else
-	echo "Node.js is not installed or is not in your PATH. Please, fix it before continue."
+  echo ""
+  echo "***********************************************************************************************"
+  echo "*                                                                                             *"
+  echo "*                              --- FATAL!!! STINKY NODE ---                                   *"
+  echo "*                                                                                             *"
+	echo "*       Node.js is not installed or is not in your PATH. Please, fix it before continue.      *"
+  echo "*                                                                                             *"
+  echo "***********************************************************************************************"
+  echo ""
 	exit 1
 fi
