@@ -334,7 +334,7 @@ module.exports = function (grunt) {
 
         aggregations.forEach(function (aggregation) {
             validateAggregation(aggregation);
-            prepAggregation(aggregation, options);
+            prepAggregation(aggregation);
 
             var aggregationFiles = extractFiles(aggregation);
             if (aggregationFiles.length === 0) {

@@ -10,7 +10,9 @@ module.exports = function (grunt) {
             base = base.replace(backSlash,"/");
             _path = _path.replace(backSlash,"/");
 
-            return path.join(base, _path).replace(lastSlash, "");
+            return path.join(base, _path)
+                .replace(lastSlash, "")
+                .replace(backSlash,"/");
         },
 
         cleanArray:function (array, base) {
