@@ -68,7 +68,7 @@ module.exports = function (grunt) {
         modify:{
             json:{
                 base:'test/resources',
-                files:['dir*/**/*.json'],
+                files:['./dir*/**/*.json'],
                 dest:'target/mod',
                 modifier:function (name, content) {
                     return {
