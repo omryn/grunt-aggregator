@@ -4,7 +4,7 @@ var fs = require('fs');
 var readFile = fs.readFile;
 
 describe("Aggregation manifest grunt plugin", function () {
-    describe("manifest files", function () {
+    describe("simple manifest files", function () {
         it("should generate a manifest.json file", function (done) {
             expect('target/manifest.json').toHaveSameParsedContentAs('test/expected/manifest.json', done);
         });
@@ -31,11 +31,19 @@ describe("Aggregation manifest grunt plugin", function () {
             expect('target/aggregations/dir2.min.js').toHaveContent('4,5;', done);
         });
 
-        it("should not minify files if the min:false flag is used", function (done) {
+        it("should NOT minify files if the min:false flag is used", function (done) {
             expect('target/no-min/dir1').toExist();
             expect('target/no-min/dir2').toExist();
             expect('target/no-min/all.min.js').not.toExist();
             done();
+        });
+
+        it("should generate a manifest index file", function (done) {
+            expect('target/no-min.json').toHaveSameParsedContentAs('test/expected/no-min.json', done);
+        });
+
+        it("should generate a manifest debug index file", function (done) {
+            expect('target/no-min.debug.json').toHaveSameParsedContentAs('test/expected/no-min.debug.json', done);
         });
     });
 
@@ -50,6 +58,10 @@ describe("Aggregation manifest grunt plugin", function () {
 
         it("should generate a manifest index containing the different minifications for js and css ", function (done) {
             expect('target/css.json').toHaveSameParsedContentAs('test/expected/css.json', done);
+        });
+
+        it("should generate a manifest debug index containing the different minifications for js and css ", function (done) {
+            expect('target/css.debug.json').toHaveSameParsedContentAs('test/expected/css.debug.json', done);
         });
     });
 
@@ -132,11 +144,11 @@ beforeEach(function () {
 
                 function isEqual(actual, expected, messagePrefix) {
                     if (typeof actual !== typeof expected) {
-                        return addMismatch(messagePrefix, "type mismatch: actual is " + typeof actual + " expected is " + typeof expected);
+                        return addMismatch(messagePrefix, "type mismatch: actual is " + typeof actual + " expected " + typeof expected);
                     }
                     if (actual instanceof Array) {
                         if (!(expected instanceof Array)) {
-                            return addMismatch(messagePrefix, "type mismatch: actual is Array, expected is not an Array");
+                            return addMismatch(messagePrefix, "type mismatch: actual is Array, expected other type");
                         }
                         return isEqualArray(actual, expected, messagePrefix);
                     }
@@ -144,7 +156,7 @@ beforeEach(function () {
                         return isEqualObject(actual, expected, messagePrefix);
                     }
                     if (actual !== expected) {
-                        return addMismatch(messagePrefix, 'value mismatch: actual is "' + actual + '", expected is "' + expected + '"');
+                        return addMismatch(messagePrefix, 'value mismatch: actual is "' + actual + '", expected: "' + expected + '"');
                     }
                     return true;
                 }

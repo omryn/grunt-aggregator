@@ -1,9 +1,24 @@
 [
     {
+        "id": "css",
         "tags": [
             "css"
         ],
-        "id": "css",
+        "url": "css/css",
+        "resources": [
+            {
+                "url": "a.js"
+            },
+            {
+                "url": "b.js"
+            }
+        ]
+    },
+    {
+        "id": "css#css",
+        "tags": [
+            "css"
+        ],
         "url": "css/css",
         "resources": [
             {
@@ -11,12 +26,6 @@
             },
             {
                 "url": "2.css"
-            },
-            {
-                "url": "a.js"
-            },
-            {
-                "url": "b.js"
             }
         ]
     }
