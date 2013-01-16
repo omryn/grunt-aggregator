@@ -60,25 +60,38 @@ module.exports = function (grunt) {
 
     function setMin(min, aggregation, aggregationFiles, manifest, debugManifest) {
         var files = aggregationFiles.filter(js);
-        if (aggregation.min && files.length) {
-            var dest = utils.unixpath(aggregation.dest + ".min.js", aggregation.targetDir);
-            var sources = utils.cleanArray(files, aggregation.sourceDir + "/" + aggregation.package);
-            if (sources.length) {
-                min[aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id] = {
-                    src:sources,
-                    dest:dest
-                };
-                if (!aggregation.excludeFromManifest) {
-                    var entry = createManifestEntry(aggregation);
-                    entry.url = utils.unixpath(path.relative(aggregation.manifestPath, dest));
-                    manifest.push(entry);
+        var dest = utils.unixpath(aggregation.dest + ".min.js", aggregation.targetDir);
+        var debugEntry = createManifestEntry(aggregation);
 
-                    var debugEntry = createManifestEntry(aggregation);
+        if (files.length) {
+            if (aggregation.min) {
+
+                var sources = utils.cleanArray(files, aggregation.sourceDir + "/" + aggregation.package);
+                if (sources.length) {
+                    min[aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id] = {
+                        src: sources,
+                        dest: dest
+                    };
+                }
+            }
+            if (!aggregation.excludeFromManifest) {
+                if (aggregation.copy) {
                     debugEntry.url = utils.unixpath(path.relative(aggregation.manifestPath, aggregation.targetDir + "/" + aggregation.package));
                     debugEntry.resources = files.map(function (url) {
-                        return {url:url};
+                        return {url: url};
                     });
                     debugManifest.push(debugEntry);
+                }
+
+                if (aggregation.min) {
+                    var entry = createManifestEntry(aggregation);
+                    entry.url = utils.unixpath(path.relative(aggregation.manifestPath, dest));
+
+                    manifest.push(entry);
+                } else {
+                    if (aggregation.copy) {
+                        manifest.push(debugEntry);
+                    }
                 }
             }
         }
@@ -92,15 +105,15 @@ module.exports = function (grunt) {
             if (sources.length) {
                 sources.forEach(function (script, index) {
                     min['manymin#' + aggregation.id + '#' + script] = {
-                        src:script,
-                        dest:targets[index]
+                        src: script,
+                        dest: targets[index]
                     };
                 });
                 if (!aggregation.excludeFromManifest) {
                     var entry = createManifestEntry(aggregation);
                     entry.url = utils.unixpath(aggregation.package);
                     entry.resources = files.map(function (url) {
-                        return {url:url};
+                        return {url: url};
                     });
                     manifest.push(entry);
                     debugManifest.push(entry);
@@ -116,19 +129,19 @@ module.exports = function (grunt) {
             var dest = utils.unixpath(aggregation.dest + ".min.css", aggregation.targetDir);
             if (src.length > 0) {
                 mincss[aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id] = {
-                    files:{
+                    files: {
                     }
                 };
                 mincss[aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id]
                     .files[dest] = src;
             }
             if (!aggregation.excludeFromManifest) {
-                var entry = createManifestEntry(aggregation, '#css');
-                entry.url = utils.unixpath(aggregation.package);
-                entry.resources = files.map(function (url) {
-                    return {url:url};
+                var debugEntry = createManifestEntry(aggregation, '#css');
+                debugEntry.url = utils.unixpath(path.relative(aggregation.manifestPath, aggregation.targetDir + "/" + aggregation.package));
+                debugEntry.resources = files.map(function (url) {
+                    return {url: url};
                 });
-                debugManifest.push(entry);
+                debugManifest.push(debugEntry);
 
                 var minEntry = createManifestEntry(aggregation, '#css');
                 minEntry.url = utils.unixpath(aggregation.dest + ".min.css", aggregation.package);
@@ -140,21 +153,13 @@ module.exports = function (grunt) {
     function setCopy(copy, aggregation, aggregationFiles, manifest, debugManifest) {
         if (aggregation.copy) {
             var _id = aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id;
-            copy[_id] = {files:{}};
+            copy[_id] = {files: {}};
 
             aggregationFiles.forEach(function (file) {
                 var src = utils.unixpath(file, aggregation.sourceDir + "/" + aggregation.package);
                 var target = utils.unixpath(file, aggregation.targetDir + "/" + aggregation.package);
                 copy[_id].files[target] = src;
             });
-            if (!aggregation.min && !aggregation.manymin && !aggregation.excludeFromManifest) {
-                var entry = createManifestEntry(aggregation);
-                entry.url = utils.unixpath(aggregation.targetDir + "/" + aggregation.package);
-                entry.resources = aggregationFiles.map(function (url) {
-                    return {url:url};
-                });
-                debugManifest.push(entry);
-            }
         }
     }
 
@@ -164,7 +169,7 @@ module.exports = function (grunt) {
             var entry = createManifestEntry(aggregation);
             entry.url = utils.unixpath(path.relative(aggregation.manifestPath, aggregation.targetDir + "/" + aggregation.package));
             entry.resources = aggregationFiles.map(function (url) {
-                return {url:url};
+                return {url: url};
             });
             debugManifest.push(entry);
         }
@@ -183,8 +188,8 @@ module.exports = function (grunt) {
 
     function createManifestEntry(aggregation, idPostFix) {
         var entry = {
-            id:aggregation.id + (idPostFix || ''),
-            tags:aggregation.tags
+            id: aggregation.id + (idPostFix || ''),
+            tags: aggregation.tags
         };
         if (aggregation.atPhase) {
             entry.atPhase = aggregation.atPhase;
@@ -255,7 +260,6 @@ module.exports = function (grunt) {
     function runMin(manifest, min) {
         if (options.manymin || options.min) {
             if (Object.keys(min).length > 0) {
-                writeManifest(manifest);
                 grunt.config.set('min', min);
                 grunt.verbose.write("Minifying files. ");
                 grunt.verbose.writeln(JSON.stringify(grunt.config.get('min'), null, 4).cyan);
@@ -266,7 +270,6 @@ module.exports = function (grunt) {
 
     function runMinCss(manifest, mincss) {
         if (options.min && Object.keys(mincss).length > 0) {
-            writeManifest(manifest);
             grunt.config.set('mincss', mincss);
             grunt.verbose.write("Minifying CSS files. ");
             grunt.verbose.writeln(JSON.stringify(grunt.config.get('mincss'), null, 4).cyan);
@@ -347,6 +350,8 @@ module.exports = function (grunt) {
         });
 
         writeDebugManifest(debugManifest);
+        writeManifest(manifest);
+
         runLint(lint);
         runCopy(copy);
         runMin(manifest, min);

@@ -1,5 +1,6 @@
 [
     {
+        "min":false,
         "id":"all",
         "atPhase":"PHASE.ALL",
         "tags":["all", "dir1", "dir2"],
@@ -11,7 +12,8 @@
         ],
         "exclude":[
             "**/exclude.js",
-            "css/*"
+            "css/*"  ,
+                "manymin/*"
         ]
     }
 ]

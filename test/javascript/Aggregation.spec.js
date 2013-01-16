@@ -38,11 +38,11 @@ describe("Aggregation manifest grunt plugin", function () {
             done();
         });
 
-        it("should generate a manifest index file", function (done) {
+        it("should generate a manifest file (no-min.json) when min flag is false", function (done) {
             expect('target/no-min.json').toHaveSameParsedContentAs('test/expected/no-min.json', done);
         });
 
-        it("should generate a manifest debug index file", function (done) {
+        it("should generate a manifest debug index file (no-min.debug.json) when min flag is false", function (done) {
             expect('target/no-min.debug.json').toHaveSameParsedContentAs('test/expected/no-min.debug.json', done);
         });
     });
