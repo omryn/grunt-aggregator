@@ -1,0 +1,16 @@
+[
+    {
+        "id": "ordered-list",
+        "tags": ["ordered-list"],
+        "targetDir": "ordered-list",
+        "package": "dir1",
+        "sourceDir": "./test/resources",
+        "include": [
+            "subdir1_2/a.js" ,
+            "subdir1_1/b.js",
+            "subdir1_1/a.js"
+        ],
+        "exclude": [
+        ]
+    }
+]

@@ -26,6 +26,10 @@ module.exports = function (grunt) {
         },
 
         aggregate:{
+            "ordered-list":{
+                src:"test/resources/ordered-list.json",
+                manifest:"target/ordered-list.json"
+            },
             main:{
                 src:"test/resources/aggregations.json",
                 manifest:"target/manifest.json"

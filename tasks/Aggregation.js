@@ -9,8 +9,8 @@ module.exports = function (grunt) {
         if (!aggregation.id || typeof aggregation.id !== 'string') {
             grunt.fail.fatal('Invalid aggregation: "' + aggregation + '" must contain an "id" field (non-empty string). \nExample: "id":"my-aggregation"');
         }
-        if (!/^[\w\d#]+$/.test(aggregation.id)) {
-            grunt.fail.fatal('Invalid aggregation: "' + aggregation.id + '" contains an invalid id (may contain only letters , numbers and #)');
+        if (!/^[\w\d#\-]+$/.test(aggregation.id)) {
+            grunt.fail.fatal('Invalid aggregation: "' + aggregation.id + '" contains an invalid id (may contain only letters , numbers, - and #)');
         }
         if (!aggregation.tags || !aggregation.tags.length) {
             grunt.fail.fatal('Invalid aggregation: "' + aggregation.id + '" must contain a "tags" field (non-empty array of strings). \nExample: "tags": ["common","viewer"]');

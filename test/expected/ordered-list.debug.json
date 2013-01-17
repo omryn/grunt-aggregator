@@ -1,0 +1,20 @@
+[
+    {
+        "id": "ordered-list",
+        "tags": [
+            "ordered-list"
+        ],
+        "url": "ordered-list/dir1",
+        "resources": [
+            {
+                "url": "subdir1_2/a.js"
+            },
+            {
+                "url": "subdir1_1/b.js"
+            },
+            {
+                "url": "subdir1_1/a.js"
+            }
+        ]
+    }
+]

@@ -14,7 +14,13 @@ describe("Aggregation manifest grunt plugin", function () {
         });
 
         it("should exclude aggregations that have an non empty exclude", function (done) {
-            expect('target/exclude.debug.json').toHaveSameParsedContentAs('test/expected/exclude.json', done);
+            expect('target/exclude.debug.json').toHaveSameParsedContentAs('test/expected/exclude.debug.json', done);
+            expect('target/exclude.json').toHaveSameParsedContentAs('test/expected/exclude.json', done);
+        });
+
+        it("should keep order of aggregated files as defined in ordered-list.json", function (done) {
+            expect('target/ordered-list.debug.json').toHaveSameParsedContentAs('test/expected/ordered-list.debug.json', done);
+            expect('target/ordered-list.json').toHaveSameParsedContentAs('test/expected/ordered-list.json', done);
         });
     });
 
@@ -25,6 +31,10 @@ describe("Aggregation manifest grunt plugin", function () {
 
         it("should minify & concat dir1.min.js as defined in aggregations.json", function (done) {
             expect('target/aggregations/dir1.min.js').toHaveContent('1,2,3;', done);
+        });
+
+        it("should minify & concat ordered-list.min.js as defined in ordered-list.json", function (done) {
+            expect('target/ordered-list/ordered-list.min.js').toHaveContent('3,2,1;', done);
         });
 
         it("should minify & concat dir2.min.js as defined in aggregations.json", function (done) {
@@ -45,6 +55,8 @@ describe("Aggregation manifest grunt plugin", function () {
         it("should generate a manifest debug index file (no-min.debug.json) when min flag is false", function (done) {
             expect('target/no-min.debug.json').toHaveSameParsedContentAs('test/expected/no-min.debug.json', done);
         });
+
+
     });
 
     describe("css aggregaion", function () {
