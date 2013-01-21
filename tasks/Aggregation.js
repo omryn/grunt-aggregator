@@ -144,7 +144,8 @@ module.exports = function (grunt) {
                 debugManifest.push(debugEntry);
 
                 var minEntry = createManifestEntry(aggregation, '#css');
-                minEntry.url = utils.unixpath(aggregation.dest + ".min.css", aggregation.package);
+                minEntry.url = utils.unixpath(path.relative(aggregation.manifestPath, aggregation.targetDir + "/" + aggregation.dest + ".min.css"));
+                    //utils.unixpath(aggregation.dest + ".min.css", aggregation.package);
                 manifest.push(minEntry);
             }
         }
@@ -257,7 +258,7 @@ module.exports = function (grunt) {
         }
     }
 
-    function runMin(manifest, min) {
+    function runMin(min) {
         if (options.manymin || options.min) {
             if (Object.keys(min).length > 0) {
                 grunt.config.set('min', min);
@@ -268,7 +269,7 @@ module.exports = function (grunt) {
         }
     }
 
-    function runMinCss(manifest, mincss) {
+    function runMinCss(mincss) {
         if (options.min && Object.keys(mincss).length > 0) {
             grunt.config.set('mincss', mincss);
             grunt.verbose.write("Minifying CSS files. ");
@@ -354,7 +355,7 @@ module.exports = function (grunt) {
 
         runLint(lint);
         runCopy(copy);
-        runMin(manifest, min);
-        runMinCss(manifest, mincss);
+        runMin(min);
+        runMinCss(mincss);
     });
 };

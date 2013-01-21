@@ -1,19 +1,19 @@
 [
     {
-        "min":false,
-        "id":"all",
-        "atPhase":"PHASE.ALL",
-        "tags":["all", "dir1", "dir2"],
-        "targetDir":"no-min",
-        "sourceDir":"./test/resources",
-        "package":"",
-        "include":[
+        "min": false,
+        "id": "all",
+        "atPhase": "PHASE.ALL",
+        "tags": ["all", "dir1", "dir2"],
+        "targetDir": "no-min",
+        "sourceDir": "./test/resources",
+        "package": "",
+        "include": [
             "**/*.js"
         ],
-        "exclude":[
+        "exclude": [
             "**/exclude.js",
-            "css/*"  ,
-                "manymin/*"
+            "css/**/*"  ,
+            "manymin/*"
         ]
     }
 ]

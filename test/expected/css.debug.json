@@ -4,7 +4,7 @@
         "tags": [
             "css"
         ],
-        "url": "css/css",
+        "url": "css/css/dir1",
         "resources": [
             {
                 "url": "a.js"
@@ -19,7 +19,7 @@
         "tags": [
             "css"
         ],
-        "url": "css/css",
+        "url": "css/css/dir1",
         "resources": [
             {
                 "url": "1.css"

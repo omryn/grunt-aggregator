@@ -3,7 +3,7 @@
         "id":"css",
         "tags":["css"],
         "targetDir":"css",
-        "package":"css",
+        "package":"css/dir1",
         "sourceDir":"./test/resources",
         "include":[
             "*"
