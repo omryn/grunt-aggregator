@@ -5,7 +5,8 @@ module.exports = function (grunt) {
         lint:{
             all:[
                 'grunt.js',
-                'tasks/**/*.js'
+                'tasks/**/*.js',
+                'test/javascript/**/*.js'
             ]
         },
 
@@ -86,8 +87,16 @@ module.exports = function (grunt) {
             test:"target"
         },
 
+        copy:{
+            target:{
+                files:{
+                    'target/aggregations/greatescape/escaped.js':['test/resources/greatescape/original.js']
+                }
+            }
+        },
+
         greatescape:{
-            all: 'test/resources/greatescape/escaped.js'
+            all: 'target/aggregations/greatescape/escaped.js'
         }
     })
     ;
