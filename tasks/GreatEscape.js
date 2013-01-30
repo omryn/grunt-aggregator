@@ -25,7 +25,7 @@ module.exports = function (grunt) {
             var syntax = esprima.parse(code, {raw:true});
             var escapedCode = escodegen.generate(syntax, option);
             var reEscapedCode = escapedCode.replace(/\"/g,'\\\"');
-            grunt.file.write(src+'.escaped',reEscapedCode);
+            grunt.file.write(src,reEscapedCode);
         });
         grunt.verbose.writeln("Done escaping files".bold);
 
