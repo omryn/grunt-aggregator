@@ -145,7 +145,7 @@ module.exports = function (grunt) {
 
                 var minEntry = createManifestEntry(aggregation, '#css');
                 minEntry.url = utils.unixpath(path.relative(aggregation.manifestPath, aggregation.targetDir + "/" + aggregation.dest + ".min.css"));
-                    //utils.unixpath(aggregation.dest + ".min.css", aggregation.package);
+                //utils.unixpath(aggregation.dest + ".min.css", aggregation.package);
                 manifest.push(minEntry);
             }
         }
@@ -198,28 +198,32 @@ module.exports = function (grunt) {
         return entry;
     }
 
+    function extractPathExcludingWildCards(dir) {
+        if (dir.indexOf("*") >= 0) {
+            var includeInPath = true;
+            var tmp = dir.split("/").filter(function (pathPart) {
+                includeInPath = includeInPath && pathPart.indexOf("*") < 0;
+                includeInPath = includeInPath && pathPart.indexOf("?") < 0;
+                return includeInPath;
+            });
+            dir = tmp.join("/");
+        }
+        return dir;
+    }
+
     function extractFiles(aggregation) {
         var allFiles = [];
         aggregation.include.forEach(function (file) {
             var filesDef = utils.unixpath(file, aggregation.sourceDir + "/" + aggregation.package);
-            var dir = filesDef;
-            if (dir.indexOf("*") >= 0) {
-                var includeInPath = true;
-                var tmp = dir.split("/").filter(function (pathPart) {
-                    includeInPath = includeInPath && pathPart.indexOf("*") < 0;
-                    includeInPath = includeInPath && pathPart.indexOf("?") < 0;
-                    return includeInPath;
-                });
-                dir = tmp.join("/");
-            }
-            if (fs.existsSync(dir)) {
-                var files = grunt.file.expandFiles(filesDef);
+            var simplePath = extractPathExcludingWildCards(filesDef);
+            if (fs.existsSync(simplePath)) {
+                var files = grunt.file.expandFiles(filesDef).sort();
                 files.forEach(function (fileName) {
                     fileName = utils.unixpath(path.relative(aggregation.sourceDir + "/" + aggregation.package, fileName));
                     allFiles.push(fileName);
                 });
             } else {
-                grunt.warn("Aggregation " + aggregation.id.bold + " includes missing folder or file: " + dir.red + " @ " + filesDef.bold);
+                grunt.warn("Aggregation " + aggregation.id.bold + " includes missing folder or file: " + simplePath.red + " @ " + filesDef.bold);
             }
         });
 
