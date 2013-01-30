@@ -90,7 +90,7 @@ module.exports = function (grunt) {
         copy:{
             target:{
                 files:{
-                    'target/aggregations/greatescape/escaped.js':['test/resources/greatescape/original.js']
+                    'target/aggregations/greatescape/escaped.js':['test/greatescape/original.js']
                 }
             }
         },

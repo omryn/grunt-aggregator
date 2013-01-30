@@ -1,8 +1,8 @@
 "use strict";
 var readFileSync = require('fs').readFileSync;
 
-describe("FileModifier", function () {
-    var origPath='test/resources/greatescape/original.js';
+describe("GreatEscape", function () {
+    var origPath='test/greatescape/original.js';
     var escapedPath='target/aggregations/greatescape/escaped.js';
     var original =(readFileSync(origPath, 'utf8'));
     var escaped = (readFileSync(escapedPath, 'utf8'));
