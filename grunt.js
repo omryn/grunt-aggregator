@@ -5,8 +5,7 @@ module.exports = function (grunt) {
         lint:{
             all:[
                 'grunt.js',
-                'tasks/**/*.js',
-                'test/javascript/**/*.js'
+                'tasks/**/*.js'
             ]
         },
 
@@ -85,6 +84,10 @@ module.exports = function (grunt) {
 
         clean:{
             test:"target"
+        },
+
+        greatescape:{
+            all: 'test/resources/greatescape/escaped.js'
         }
     })
     ;
@@ -98,5 +101,5 @@ module.exports = function (grunt) {
     grunt.loadTasks('tasks');
 
 // By default, lint and run all tests.
-    grunt.registerTask('default', ['clean', 'lint', 'modify', 'aggregate', 'jasmine_node']);
+    grunt.registerTask('default', ['clean', 'lint', 'modify', 'aggregate', 'greatescape', 'jasmine_node']);
 };

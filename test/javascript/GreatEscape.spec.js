@@ -1,26 +1,33 @@
-'use strict';
 var readFileSync = require('fs').readFileSync;
+var fs = require('fs');
+
+function copyFile(from, to){
+    fs.writeFileSync(to, fs.readFileSync(from, 'utf8'));
+}
 
 describe("FileModifier", function () {
-    // it("should modify the file content", function (done) {
-    //     var actual = JSON.parse(readFileSync('target/mod/dir1/subdir1_1/mod.json'));
+    var origPath='test/resources/greatescape/original.js';
+    var escapedPath='test/resources/greatescape/escaped.js';
+    var original =(readFileSync(origPath, 'utf8'));
+    var escaped = (readFileSync(escapedPath, 'utf8'));
+    var escapedText = "'use strict';function theRest(){var nya='\\\"meow\\\"';var wuff='\\\"=^.^=\\\"';var meowWuff='\\\'^>.<^\\\'';return{nya:[nya,wuff,meowWuff]};}";
 
-    //     expect(actual).toEqual([
-    //         {
-    //             "test":"FileModifier"
-    //         }
-    //     ]);
-    //     done();
-    // });
+    // cleanup after test
+    copyFile(origPath,escapedPath);
 
-    // it("should modify the file name", function (done) {
-    //     var actual = JSON.parse(readFileSync('target/mod/genereated.name.json'));
 
-    //     expect(actual).toEqual([
-    //         {
-    //             "test2":"FileModifier"
-    //         }
-    //     ]);
-    //     done();
-    // });
+    it("should escape the file content", function (done) {
+        expect(escaped).toBe(escapedText);
+        done();
+    });
+
+//    it("should escape the file content", function (done) {
+//        var savedFunction = eval(escaped);
+//        console.log(savedFunction);
+//        var result = theRest();
+//        expect(escaped).toBe({nya:['"meow"', '\"=^.^=\"',"\'^>.<^\'"]});
+//        done();
+//    })
 });
+
+
