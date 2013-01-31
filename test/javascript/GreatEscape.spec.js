@@ -1,25 +1,14 @@
-"use strict";
 var readFileSync = require('fs').readFileSync;
 
-describe("GreatEscape", function () {
-    var origPath='test/greatescape/original.js';
-    var escapedPath='target/aggregations/greatescape/escaped.js';
-    var original =(readFileSync(origPath, 'utf8'));
-    var escaped = (readFileSync(escapedPath, 'utf8'));
-    var escapedText = "'use strict';function theRest(){var nya='\\\"meow\\\"';var wuff='\\\"=^.^=\\\"';var meowWuff='\\\'^>.<^\\\'';return{nya:[nya,wuff,meowWuff]};}";
+describe("GreatEscape", function() {
+	var origPath = 'test/greatescape/original.js';
+	var escapedPath = 'target/aggregations/greatescape/escaped.js';
+	var original = (readFileSync(origPath, 'utf8'));
+	var escaped = (readFileSync(escapedPath, 'utf8'));
+	var escapedText = "\n\\\"use strict\\\"\n\nwindow.theRest = function (){\n    var nya = '\\\"meow\\\"';\n    var wuff = '\\\\\\\"=^.^=\\\\\\\"';\n    var meowWuff = \\\"\\\\'^>.<^\\\\'\\\";\n\n    return {\n        nya: [\n            nya, wuff, meowWuff\n        ]\n    }\n}\n\n\n\n\n\n\n";
 
-    it("should escape the file content", function (done) {
-        expect(escaped).toBe(escapedText);
-        done();
-    });
-
-//    it("should escape the file content", function (done) {
-//        var savedFunction = eval(escaped);
-//        console.log(savedFunction);
-//        var result = theRest();
-//        expect(escaped).toBe({nya:['"meow"', '\"=^.^=\"',"\'^>.<^\'"]});
-//        done();
-//    })
+	it("should escape the file content", function(done) {
+		expect(escaped.replace(/[\s\t]*/g, '').replace(/\\n/g, '')).toBe(escapedText.replace(/[\r\n\s]*/g, ''));
+		done();
+	});
 });
-
-

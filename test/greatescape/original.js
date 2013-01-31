@@ -1,15 +1,6 @@
-"use strict";
-// initial code
+"use strict"
 
-// function Nya(){
-// 	return {kitteh: "nya!"};
-// }
-// function Wuff(){
-// 	// dogz are evil
-// 	return {kitteh: '*scuiqe'};
-// }
-
-function theRest(){
+window.theRest = function (){
     var nya = '"meow"';
     var wuff = '\"=^.^=\"';
     var meowWuff = "\'^>.<^\'";
@@ -20,3 +11,8 @@ function theRest(){
         ]
     }
 }
+
+
+
+
+
