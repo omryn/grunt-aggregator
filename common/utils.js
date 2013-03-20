@@ -1,3 +1,4 @@
+"use strict";
 module.exports = function (grunt) {
     var backSlash = /\\/g;
     var lastSlash = /\/$/;
@@ -17,7 +18,7 @@ module.exports = function (grunt) {
 
         cleanArray:function (array, base) {
             base = base || '';
-            return grunt.utils._
+            return grunt.util._
                     .chain(array)
                     .compact()
                     .map(function (file) {

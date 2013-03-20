@@ -1,1 +1,1 @@
-'should be excluded from aggregations'
+file('should be excluded from aggregations');

@@ -7,7 +7,7 @@ describe("FileModifier", function () {
 
         expect(actual).toEqual([
             {
-                "test":"FileModifier"
+                "test": "FileModifier"
             }
         ]);
         done();
@@ -18,7 +18,7 @@ describe("FileModifier", function () {
 
         expect(actual).toEqual([
             {
-                "test2":"FileModifier"
+                "test2": "FileModifier"
             }
         ]);
         done();

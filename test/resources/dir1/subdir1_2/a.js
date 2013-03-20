@@ -1,1 +1,1 @@
-3
+file('dir1/subdir1_2/a.js');

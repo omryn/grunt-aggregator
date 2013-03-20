@@ -1,1 +1,1 @@
-var b = 2 ;
+file('manymin/b.js');

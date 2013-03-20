@@ -1,35 +1,35 @@
 {
-    "name":"grunt-aggregator",
-    "description":"Plugins for Wix.com js build",
-    "version":"0.2.27",
-    "author":"Omry Nachman <omry@wix.com>",
-    "main":"commons/grunt-aggregator.js",
-    "engines":{
-        "node":">= 0.8.0"
+    "name": "grunt-aggregator",
+    "description": "Plugins for Wix.com js build",
+    "version": "0.3.1",
+    "author": "Omry Nachman <omry@wix.com>",
+    "main": "commons/grunt-aggregator.js",
+    "engines": {
+        "node": ">= 0.8.6"
     },
-    "repository":{
-        "type":"git",
-        "url":"git@github.com:omryn/grunt-aggregator.git"
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:omryn/grunt-aggregator.git"
     },
-    "dependencies":{
-				"grunt":"0.3.x",
-        "grunt-jasmine-node":">=0.0.4",
-        "grunt-clean":">=0.3.0",
-        "grunt-contrib-copy":">=0.3.2",
-        "grunt-contrib-mincss":"*",
-        "esprima":"*",
-        "escodegen":"*"
+    "dependencies": {
+        "grunt": "*",
+        "grunt-contrib-clean": "*",
+        "grunt-contrib-copy": "*",
+        "grunt-contrib-jshint": "*",
+        "grunt-contrib-uglify": "*",
+        "grunt-contrib-cssmin": "*",
+        "jasmine-node": "*"
     },
-    "scripts":{
-        "test":"grunt test"
+    "scripts": {
+        "test": "grunt && node_modules/jasmine-node/bin/jasmine-node test/javascript"
     },
-    "keywords":[
+    "keywords": [
         "gruntplugin"
     ],
-    "licenses":[
+    "licenses": [
         {
-            "type":"MIT",
-            "url":"https://github.com/:omryn/grunt-aggregator/blob/master/LICENSE-MIT"
+            "type": "MIT",
+            "url": "https://github.com/:omryn/grunt-aggregator/blob/master/LICENSE-MIT"
         }
     ]
 }

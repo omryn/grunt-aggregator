@@ -1,1 +1,1 @@
-2
+file('css/dir1/b.js');

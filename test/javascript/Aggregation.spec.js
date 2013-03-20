@@ -26,19 +26,32 @@ describe("Aggregation manifest grunt plugin", function () {
 
     describe("minify", function () {
         it("should minify & concat all.min.js as defined in aggregations.json", function (done) {
-            expect('target/aggregations/all.min.js').toHaveContent('1,2,3,4,5;', done);
+            expect('target/aggregations/all.min.js').toHaveContent(
+                'file("dir1/subdir1_1/a.js"),' +
+                    'file("dir1/subdir1_1/b.js"),' +
+                    'file("dir1/subdir1_2/a.js"),' +
+                    'file("dir2/a.js"),file("dir2/b.js");',
+                done);
         });
 
         it("should minify & concat dir1.min.js as defined in aggregations.json", function (done) {
-            expect('target/aggregations/dir1.min.js').toHaveContent('1,2,3;', done);
+            expect('target/aggregations/dir1.min.js').toHaveContent(
+                'file("dir1/subdir1_1/a.js"),' +
+                    'file("dir1/subdir1_1/b.js"),' +
+                    'file("dir1/subdir1_2/a.js");',
+                done);
         });
 
         it("should minify & concat ordered-list.min.js as defined in ordered-list.json", function (done) {
-            expect('target/ordered-list/ordered-list.min.js').toHaveContent('3,2,1;', done);
+            expect('target/ordered-list/ordered-list.min.js').toHaveContent(
+                'file("dir1/subdir1_2/a.js"),' +
+                    'file("dir1/subdir1_1/b.js"),' +
+                    'file("dir1/subdir1_1/a.js");',
+                done);
         });
 
         it("should minify & concat dir2.min.js as defined in aggregations.json", function (done) {
-            expect('target/aggregations/dir2.min.js').toHaveContent('4,5;', done);
+            expect('target/aggregations/dir2.min.js').toHaveContent('file("dir2/a.js"),file("dir2/b.js");', done);
         });
 
         it("should NOT minify files if the min:false flag is used", function (done) {
@@ -61,7 +74,7 @@ describe("Aggregation manifest grunt plugin", function () {
 
     describe("css aggregaion", function () {
         it("should minify the css as a separate file", function (done) {
-            expect('target/css/css.min.js').toHaveContent('1,2;', done);
+            expect('target/css/css.min.js').toHaveContent('file("css/dir1/a.js"),file("css/dir1/b.js");', done);
         });
 
         it("should minify the js as a separate file", function (done) {
@@ -129,11 +142,11 @@ describe("Aggregation manifest grunt plugin", function () {
         });
 
         it("should minify the files content (a.js)", function (done) {
-            expect("target/manymin/a.js").toHaveContent("var a=1;", done);
+            expect("target/manymin/a.js").toHaveContent('file("manymin/a.js");', done);
         });
 
         it("should minify the files content (b.js)", function (done) {
-            expect("target/manymin/b.js").toHaveContent("var b=2;", done);
+            expect("target/manymin/b.js").toHaveContent('file("manymin/b.js");', done);
         });
     });
 });
@@ -141,11 +154,11 @@ describe("Aggregation manifest grunt plugin", function () {
 beforeEach(function () {
     this.addMatchers(
         {
-            toExist:function () {
+            toExist: function () {
                 return fs.existsSync(this.actual);
             },
 
-            toEqual:function (expected) {
+            toEqual: function (expected) {
                 var messages = '';
 
                 function addMismatch(messagePrefix, message) {
@@ -215,7 +228,7 @@ beforeEach(function () {
                 return isEqual(this.actual, expected, '{root}');
             },
 
-            toHaveParsedContent:function (content, done) {
+            toHaveParsedContent: function (content, done) {
                 var fileName = this.actual;
                 readFile(this.actual, 'utf8', function (err, data) {
                     if (!err && data) {
@@ -229,7 +242,7 @@ beforeEach(function () {
                 return true;
             },
 
-            toHaveSameParsedContentAs:function (expectedResultFile, done) {
+            toHaveSameParsedContentAs: function (expectedResultFile, done) {
                 var actual = this.actual;
                 var content = {};
 
@@ -260,7 +273,7 @@ beforeEach(function () {
                 return true;
             },
 
-            toHaveContent:function (content, done) {
+            toHaveContent: function (content, done) {
                 var fileName = this.actual;
                 readFile(fileName, 'utf8', function (err, data) {
                     if (!err && data) {

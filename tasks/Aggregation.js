@@ -1,8 +1,9 @@
+'use strict';
 module.exports = function (grunt) {
-    'use strict';
     var path = require('path');
     var fs = require('fs');
     var utils = require('../common/utils.js')(grunt);
+    var _ = grunt.util._;
     var options;
 
     function validateAggregation(aggregation) {
@@ -45,10 +46,9 @@ module.exports = function (grunt) {
         aggregation.manifestPath = path.dirname(options.manifest);
         aggregation.targetDir = utils.unixpath(aggregation.targetDir, aggregation.manifestPath);
 
-        setAggregationProperty(aggregation, 'lint');
         setAggregationProperty(aggregation, 'copy');
         setAggregationProperty(aggregation, 'min');
-        setAggregationProperty(aggregation, 'mincss');
+        setAggregationProperty(aggregation, 'cssmin');
         setAggregationProperty(aggregation, 'manymin');
     }
 
@@ -59,6 +59,8 @@ module.exports = function (grunt) {
     }
 
     function setMin(min, aggregation, aggregationFiles, manifest, debugManifest) {
+        console.log('set');
+
         var files = aggregationFiles.filter(js);
         var dest = utils.unixpath(aggregation.dest + ".min.js", aggregation.targetDir);
         var debugEntry = createManifestEntry(aggregation);
@@ -68,9 +70,10 @@ module.exports = function (grunt) {
 
                 var sources = utils.cleanArray(files, aggregation.sourceDir + "/" + aggregation.package);
                 if (sources.length) {
+                    var targets = {};
+                    targets[dest] = sources;
                     min[aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id] = {
-                        src: sources,
-                        dest: dest
+                        files:targets
                     };
                 }
             }
@@ -98,16 +101,18 @@ module.exports = function (grunt) {
     }
 
     function setManyMin(min, aggregation, aggregationFiles, manifest, debugManifest) {
+        console.log('set');
+
         var files = aggregationFiles.filter(js);
         if (aggregation.manymin && files.length) {
             var sources = utils.cleanArray(files, aggregation.sourceDir + "/" + aggregation.package);
             var targets = utils.cleanArray(files, aggregation.targetDir + "/" + aggregation.package);
             if (sources.length) {
+                min['manymin#' + aggregation.id] = {
+                    files:{}
+                };
                 sources.forEach(function (script, index) {
-                    min['manymin#' + aggregation.id + '#' + script] = {
-                        src: script,
-                        dest: targets[index]
-                    };
+                    min['manymin#' + aggregation.id].files[targets[index]] = [script];
                 });
                 if (!aggregation.excludeFromManifest) {
                     var entry = createManifestEntry(aggregation);
@@ -122,17 +127,19 @@ module.exports = function (grunt) {
         }
     }
 
-    function setMinCss(mincss, aggregation, aggregationFiles, manifest, debugManifest) {
+    function setCssMin(cssMin, aggregation, aggregationFiles, manifest, debugManifest) {
+        console.log('set');
+
         var files = aggregationFiles.filter(css);
-        if (aggregation.mincss && files.length) {
+        if (aggregation.cssmin && files.length) {
             var src = utils.cleanArray(files, aggregation.sourceDir + "/" + aggregation.package);
             var dest = utils.unixpath(aggregation.dest + ".min.css", aggregation.targetDir);
             if (src.length > 0) {
-                mincss[aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id] = {
+                cssMin[aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id] = {
                     files: {
                     }
                 };
-                mincss[aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id]
+                cssMin[aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id]
                     .files[dest] = src;
             }
             if (!aggregation.excludeFromManifest) {
@@ -152,6 +159,7 @@ module.exports = function (grunt) {
     }
 
     function setCopy(copy, aggregation, aggregationFiles, manifest, debugManifest) {
+        console.log('set');
         if (aggregation.copy) {
             var _id = aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id;
             copy[_id] = {files: {}};
@@ -165,6 +173,8 @@ module.exports = function (grunt) {
     }
 
     function setList(aggregation, aggregationFiles, manifest, debugManifest) {
+        console.log('set');
+
         if (!aggregation.copy && !aggregation.min && !aggregation.manymin && !aggregation.excludeFromManifest) {
 
             var entry = createManifestEntry(aggregation);
@@ -176,16 +186,6 @@ module.exports = function (grunt) {
         }
     }
 
-    function setLint(lint, aggregation, aggregationFiles) {
-        if (aggregation.lint) {
-            var filesToLint = utils.cleanArray(aggregationFiles, aggregation.sourceDir).filter(function (fileName) {
-                return (/.*\.js$/).test(fileName);
-            });
-            if (filesToLint.length > 0) {
-                lint[aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id] = filesToLint;
-            }
-        }
-    }
 
     function createManifestEntry(aggregation, idPostFix) {
         var entry = {
@@ -214,10 +214,14 @@ module.exports = function (grunt) {
     function extractFiles(aggregation) {
         var allFiles = [];
         aggregation.include.forEach(function (file) {
+
+
+
             var filesDef = utils.unixpath(file, aggregation.sourceDir + "/" + aggregation.package);
             var simplePath = extractPathExcludingWildCards(filesDef);
+
             if (fs.existsSync(simplePath)) {
-                var files = grunt.file.expandFiles(filesDef).sort();
+                var files = grunt.file.expand(filesDef).sort();
                 files.forEach(function (fileName) {
                     fileName = utils.unixpath(path.relative(aggregation.sourceDir + "/" + aggregation.package, fileName));
                     allFiles.push(fileName);
@@ -230,10 +234,10 @@ module.exports = function (grunt) {
         allFiles = utils.cleanArray(allFiles);
 
         aggregation.exclude.forEach(function (file) {
-            var files = grunt.file.expandFiles(utils.unixpath(file, aggregation.sourceDir + "/" + aggregation.package));
+            var files = grunt.file.expand(utils.unixpath(file, aggregation.sourceDir + "/" + aggregation.package));
             files.forEach(function (fileName) {
                 fileName = utils.unixpath(path.relative(aggregation.sourceDir + "/" + aggregation.package, fileName));
-                allFiles = grunt.utils._.without(allFiles, fileName);
+                allFiles = _.without(allFiles, fileName);
             });
         });
 
@@ -244,41 +248,33 @@ module.exports = function (grunt) {
         return utils.cleanArray(allFiles);
     }
 
-    function setFollowingTasks(aggregation, aggregationFiles, copy, min, lint, mincss, manifest, debugManifest) {
+    function setFollowingTasks(aggregation, aggregationFiles, copy, min, cssmin, manifest, debugManifest) {
+        console.log('setting following tasks');
+
         setCopy(copy, aggregation, aggregationFiles, manifest, debugManifest);
         setMin(min, aggregation, aggregationFiles, manifest, debugManifest);
         setManyMin(min, aggregation, aggregationFiles, manifest, debugManifest);
-        setMinCss(mincss, aggregation, aggregationFiles, manifest, debugManifest);
+        setCssMin(cssmin, aggregation, aggregationFiles, manifest, debugManifest);
         setList(aggregation, aggregationFiles, manifest, debugManifest);
-        setLint(lint, aggregation, aggregationFiles);
-    }
-
-    function runLint(lint) {
-        if (options.lint && Object.keys(lint).length > 0) {
-            grunt.config.set('lint', lint);
-            grunt.verbose.write("Linting files files. ");
-            grunt.verbose.writeln(JSON.stringify(grunt.config.get('lint'), null, 4).cyan);
-            grunt.task.run('lint');
-        }
     }
 
     function runMin(min) {
         if (options.manymin || options.min) {
             if (Object.keys(min).length > 0) {
-                grunt.config.set('min', min);
+                grunt.config.set('uglify', min);
                 grunt.verbose.write("Minifying files. ");
-                grunt.verbose.writeln(JSON.stringify(grunt.config.get('min'), null, 4).cyan);
-                grunt.task.run('min');
+                grunt.verbose.writeln(JSON.stringify(grunt.config.get('uglify'), null, 4).cyan);
+                grunt.task.run('uglify');
             }
         }
     }
 
-    function runMinCss(mincss) {
-        if (options.min && Object.keys(mincss).length > 0) {
-            grunt.config.set('mincss', mincss);
+    function runcssmin(cssmin) {
+        if (options.min && Object.keys(cssmin).length > 0) {
+            grunt.config.set('cssmin', cssmin);
             grunt.verbose.write("Minifying CSS files. ");
-            grunt.verbose.writeln(JSON.stringify(grunt.config.get('mincss'), null, 4).cyan);
-            grunt.task.run('mincss');
+            grunt.verbose.writeln(JSON.stringify(grunt.config.get('cssmin'), null, 4).cyan);
+            grunt.task.run('cssmin');
         }
     }
 
@@ -319,8 +315,7 @@ module.exports = function (grunt) {
 
     function prepOptions() {
         options.min = options.min === undefined ? true : options.min;
-        options.mincss = options.mincss === undefined ? true : options.min;
-        options.lint = options.lint === undefined ? true : options.lint;
+        options.cssmin = options.cssmin === undefined ? true : options.min;
         options.copy = options.copy === undefined ? true : options.copy;
     }
 
@@ -332,10 +327,9 @@ module.exports = function (grunt) {
         var aggregations = grunt.file.readJSON(options.src);
         prepOptions();
 
-        var min = grunt.config.get('min') || {};
-        var mincss = grunt.config.get('mincss') || {};
+        var min = grunt.config.get('uglify') || {};
+        var cssmin = grunt.config.get('cssmin') || {};
         var copy = grunt.config.get('copy') || {};
-        var lint = grunt.config.get('lint') || {};
         var manifest = [];
         var debugManifest = [];
         var allFiles = [];
@@ -350,16 +344,15 @@ module.exports = function (grunt) {
             }
             allFiles.push.apply(allFiles, aggregationFiles);
 
-            setFollowingTasks(aggregation, aggregationFiles, copy, min, lint, mincss, manifest, debugManifest);
+            setFollowingTasks(aggregation, aggregationFiles, copy, min, cssmin, manifest, debugManifest);
             grunt.log.ok();
         });
 
         writeDebugManifest(debugManifest);
         writeManifest(manifest);
 
-        runLint(lint);
         runCopy(copy);
         runMin(min);
-        runMinCss(mincss);
+        runcssmin(cssmin);
     });
 };
