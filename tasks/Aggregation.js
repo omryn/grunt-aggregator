@@ -59,8 +59,6 @@ module.exports = function (grunt) {
     }
 
     function setMin(min, aggregation, aggregationFiles, manifest, debugManifest) {
-        console.log('set');
-
         var files = aggregationFiles.filter(js);
         var dest = utils.unixpath(aggregation.dest + ".min.js", aggregation.targetDir);
         var debugEntry = createManifestEntry(aggregation);
@@ -101,8 +99,6 @@ module.exports = function (grunt) {
     }
 
     function setManyMin(min, aggregation, aggregationFiles, manifest, debugManifest) {
-        console.log('set');
-
         var files = aggregationFiles.filter(js);
         if (aggregation.manymin && files.length) {
             var sources = utils.cleanArray(files, aggregation.sourceDir + "/" + aggregation.package);
@@ -128,8 +124,6 @@ module.exports = function (grunt) {
     }
 
     function setCssMin(cssMin, aggregation, aggregationFiles, manifest, debugManifest) {
-        console.log('set');
-
         var files = aggregationFiles.filter(css);
         if (aggregation.cssmin && files.length) {
             var src = utils.cleanArray(files, aggregation.sourceDir + "/" + aggregation.package);
@@ -159,7 +153,6 @@ module.exports = function (grunt) {
     }
 
     function setCopy(copy, aggregation, aggregationFiles, manifest, debugManifest) {
-        console.log('set');
         if (aggregation.copy) {
             var _id = aggregation.targetDir + '/' + aggregation.package + '#' + aggregation.id;
             copy[_id] = {files: {}};
@@ -173,8 +166,6 @@ module.exports = function (grunt) {
     }
 
     function setList(aggregation, aggregationFiles, manifest, debugManifest) {
-        console.log('set');
-
         if (!aggregation.copy && !aggregation.min && !aggregation.manymin && !aggregation.excludeFromManifest) {
 
             var entry = createManifestEntry(aggregation);
@@ -249,8 +240,6 @@ module.exports = function (grunt) {
     }
 
     function setFollowingTasks(aggregation, aggregationFiles, copy, min, cssmin, manifest, debugManifest) {
-        console.log('setting following tasks');
-
         setCopy(copy, aggregation, aggregationFiles, manifest, debugManifest);
         setMin(min, aggregation, aggregationFiles, manifest, debugManifest);
         setManyMin(min, aggregation, aggregationFiles, manifest, debugManifest);

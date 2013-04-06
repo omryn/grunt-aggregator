@@ -197,8 +197,7 @@ module.exports = function (grunt) {
         greatescape: {
             all: 'target/aggregations/greatescape/escaped.js'
         }
-    })
-    ;
+    });
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
